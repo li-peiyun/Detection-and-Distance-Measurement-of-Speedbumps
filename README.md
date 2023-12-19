@@ -59,6 +59,22 @@ Conda 可执行文件：`(自己的下载地址)\anaconda3\Scripts\conda.exe`
 
 具体要求见detect.py
 
+文件夹含义：capturedVideo是用来保存直接拍摄到的视频，
+
+video_and_undistortedVideo保存了我们拍摄的视频及其对应的去畸变后的视频，
+
+video中保存了一个拆分与去畸变的测试视频，
+
+generated_video是最后由照片合成的视频，
+
+undistorted_image保存了原始视频被拆分后的去畸变的帧图片，
+
+UndistortionImg_of_chessboard是测试用的标定板去畸变图片，
+
+Img_for_calibration是标定用的标定板图片，
+
+TileImage是拍摄的瓷砖图片。
+
 #### 二、减速带检测（李佩耘）
 
 已完成，见detect.py

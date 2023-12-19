@@ -1,12 +1,16 @@
 from ultralytics import YOLO
 import cv2
-
+from utils.split_video_and_undistort import split_video_to_undistroted_frames
+from utils.generate_video import generate_video_from_frames
 
 ##################################################
 # 乐怡：把视频逐帧分割为一组图片，对这组图片进行去畸变处理
 # 将去畸变后的图片放到undistorted_image文件夹中
 # 完成上述步骤后，将第19行的测试数据注释掉，换成22行的实际数据
 ##################################################
+#视频路径
+video_path = "./video/captured_video.avi" # 需要根据需要修改，路径是一个原始视频
+split_video_to_undistroted_frames(video_path)
 
 # 加载我训练的YOLOv8n模型
 model = YOLO("speedbump.pt")
@@ -65,3 +69,5 @@ for index, result in enumerate(results):
 #############################################
 # 乐怡：将marked_images文件夹内的图片重新组合成视频
 #############################################
+output_video_path = "./generated_video/generated_video.mp4"
+generate_video_from_frames(output_video_path, 20.0)
