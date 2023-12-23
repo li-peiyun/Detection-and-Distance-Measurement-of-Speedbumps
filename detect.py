@@ -9,7 +9,7 @@ import numpy as np
 # 完成上述步骤后，将第19行的测试数据注释掉，换成22行的实际数据
 ##################################################
 #视频路径
-video_path = "video_and_undistortedVideo/origin_video3.avi" # 需要根据需要修改，路径是一个原始视频
+video_path = "video_and_undistortedVideo/origin_video3.avi"  # 需要根据需要修改，路径是一个原始视频
 split_video_to_undistroted_frames(video_path)
 
 # 加载我训练的YOLOv8n模型
@@ -20,10 +20,10 @@ model = YOLO("speedbump.pt")
 # source可以是图片、视频、文件夹
 
 # 测试数据
-results = model.predict(source="test_images", save=False, classes=1, show_labels=False, show_conf=False)
+#results = model.predict(source="test_images", save=False, classes=1, show_labels=False, show_conf=False)
 
 # 实际数据
-# results = model.predict(source="undistorted_image", save=False, classes=1, show_labels=False, show_conf=False)
+results = model.predict(source="undistorted_image", save=False, classes=1, show_labels=False, show_conf=False)
 
 # result是一张图片的检测结果，results是所有图片的检测结果，index是当前迭代的次数
 for index, result in enumerate(results):

@@ -8,8 +8,9 @@ def generate_video_from_frames(output_video_path, fps):
     width = 0
     height = 0
     frames = []
-    frame_paths = glob.glob("./undistorted_image/frame_****.png")
-    frame_paths.sort()  # 确保图片按照顺序排列
+    #frame_paths = glob.glob("./marked_images/*.jpg")
+    #frame_paths.sort()  # 确保图片按照顺序排列
+    frame_paths = sorted(glob.glob("./marked_images/*.jpg"), key=lambda x: int(os.path.basename(x).split('.')[0]))
     for frame_path in frame_paths:
         frames.append(cv2.imread(frame_path))
     # 读取第一张图片以获取图像大小
