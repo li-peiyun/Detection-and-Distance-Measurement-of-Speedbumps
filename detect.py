@@ -2,14 +2,14 @@ from ultralytics import YOLO
 import cv2
 from utils.split_video_and_undistort import split_video_to_undistroted_frames
 from utils.generate_video import generate_video_from_frames
-
+import numpy as np
 ##################################################
 # 乐怡：把视频逐帧分割为一组图片，对这组图片进行去畸变处理
 # 将去畸变后的图片放到undistorted_image文件夹中
 # 完成上述步骤后，将第19行的测试数据注释掉，换成22行的实际数据
 ##################################################
 #视频路径
-video_path = "./video/captured_video.avi" # 需要根据需要修改，路径是一个原始视频
+video_path = "video_and_undistortedVideo/origin_video3.avi" # 需要根据需要修改，路径是一个原始视频
 split_video_to_undistroted_frames(video_path)
 
 # 加载我训练的YOLOv8n模型
@@ -49,7 +49,17 @@ for index, result in enumerate(results):
         # (xmin, ymin)是左上点坐标，(xmax, ymax)是右下点坐标
         # 计算减速带距离，命名为distance，替换下面的测试数据 distance = 5.3
         ################################################################
-        distance = 5.3  # 测试数据
+        xcenter = (xmin+xmax)/2
+        ycenter = (ymin + ymax) / 2
+        loaded_H = np.load('configs/H_matrix.npy')
+        point_to_transform = np.array([[xcenter, ycenter]], dtype=np.float32)
+
+        # 应用单应性矩阵到点
+        transformed_point = cv2.perspectiveTransform(point_to_transform.reshape(1, -1, 2), loaded_H)
+        # 获取映射后点的 y 坐标
+        y_coordinate_transformed = transformed_point[0][0][1]
+
+        distance = y_coordinate_transformed  # 测试数据
 
         # 在矩形上方添加文字
         text = "distance=" + str(distance)
