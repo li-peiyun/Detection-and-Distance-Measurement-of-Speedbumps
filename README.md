@@ -4,7 +4,7 @@
 
 #### 创建编译环境
 
-这里使用 Anaconda 创建用于运行 YOLOv8 的虚拟环境，如果没有 Anaconda 可以手动添加以下依赖项或使用python终端下载。
+这里使用 Anaconda 创建用于运行 YOLOv8 训练模型的虚拟环境，如果没有 Anaconda 可以手动添加以下依赖项或使用python终端下载。
 
 使用命令行，创建用于运行 YOLOv8 的虚拟环境并激活
 
@@ -19,11 +19,11 @@ conda activate yolov8
 执行以下命令安装所需依赖项：
 
 ```
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu11834
-pip install -r requirements.txt 
 pip install ultralytics
 pip install -e.
 ```
+
+其他所需的依赖项如opencv等，请根据需要添加。
 
 #### 在 pycharm 中使用上述 conda 虚拟环境
 
