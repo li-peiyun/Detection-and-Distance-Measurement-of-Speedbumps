@@ -6,7 +6,7 @@ import numpy as np
 
 
 # Video Distortion Correction
-video_path = "video_and_undistortedVideo/origin_video3.avi"  # 需要根据需要修改，路径是一个原始视频
+video_path = "video_and_undistortedVideo/origin_video3.avi"  # the path is an original video
 split_video_to_undistroted_frames(video_path)
 
 # Loading the YOLOv8 model I trained

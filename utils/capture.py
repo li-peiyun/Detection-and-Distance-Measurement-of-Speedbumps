@@ -2,7 +2,7 @@ import cv2
 import os
 from utils.file_operations import cleanFolder
 
-# 用于拍摄标定板图片来标定相机
+# Used to take a picture of the panel to calibrate the camera
 def Capture(folder: str, num: int, cap: cv2.VideoCapture, isPreClean=False) -> None:
     if isPreClean == True:
         cleanFolder(folder)

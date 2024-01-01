@@ -63,15 +63,15 @@ def CameraCalibration():
             print(f"no match in !")
             return
 
-        # 使用corners中的found来判断是否找到角点
-        # 如果找到
+        # Use found in corners to see if you have found a corner
+        # If found
         if found:
-            # 提高角点精确度
+            # Improved corner accuracy
             cv2.cornerSubPix(image_gray, corners, (3, 3), (-1, -1), subpix_criteria)
 
             cv2.drawChessboardCorners(image, board_size, corners, True)
 
-            # 显示带有角点的图片
+            # Displays pictures with corner dots
             # cv2.imshow("Chessboard Corners", image)
             # cv2.waitKey(0)
             # cv2.destroyAllWindows()
@@ -91,18 +91,18 @@ def CameraCalibration():
             calibration_flags,
             (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 1e-6)
         )
-    # print(rms) #这个参数显示了标定效果，小于0.5说明标定效果好
+    # print(rms) #This parameter shows the calibration effect, less than 0.5 indicates a good calibration effect
     output_filename = "./configs/camera_intrinsic.py"
-    # 存储相机内参数
+    # store Camera parameter
     writeIntriToFile(output_filename, K, D)
 
 def undistort(img_path, save_path,K,D,imshow=True):
     img = cv2.imread(img_path)
-    # 方法1
+    # option1
     # map1, map2 = cv2.fisheye.initUndistortRectifyMap(K, D, np.eye(3), K, DIM, cv2.CV_16SC2)
     # img_undistorted = cv2.remap(img, map1, map2, interpolation=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
 
-    # 方法2
+    # option2
     img_undistorted = cv2.fisheye.undistortImage(img, K, D, None, K)
     if imshow:
         cv2.imshow("undistorted", img_undistorted)
@@ -111,15 +111,15 @@ def undistort(img_path, save_path,K,D,imshow=True):
 
     os.makedirs(save_path, exist_ok=True)
 
-    # 将去畸变后的图像写入文件中
+    # Writes the dedistorted image to a file
     if save_path is not None:
-        # 创建文件目录
+        # Create file directory
         os.makedirs(save_path, exist_ok=True)
 
-        # 提取不带扩展名的文件名
+        # Extract a file name without an extension
         file_name = os.path.splitext(os.path.basename(img_path))[0]
 
-        # 保存去畸变后的图片
+        # Save the dedistorted image
         save_file_path = os.path.join(save_path, f"{file_name}_undistorted.png")
         cv2.imwrite(save_file_path,  img_undistorted)
         print(f"Undistorted image saved to: {save_file_path}")
@@ -132,13 +132,12 @@ if __name__ == '__main__':
     print("[1] Capture Image [2] Calibrate Camera [3] Undistort Image")
     selec = input()
     if selec == '1':
-        # 外接摄像头索引为1
         cap = cv2.VideoCapture(1)
         if not cap.isOpened():
             print(f"Error: Could not open camera at index 1")
             exit()
         else:
-            # 先清空文件夹
+            # clear first
             Capture("./Img_for_calibration", 5, cap, isPreClean=True)
 
     elif selec == '2':
@@ -152,6 +151,6 @@ if __name__ == '__main__':
             images.append(cv2.imread(image_path))
         # print("image_size", images[0].shape[1], "x", images[0].shape[0])
         DIM = (640, 480)
-        # 去畸变
+        # undistrotion
         for image_path in image_paths:
             undistort(image_path, "./UndistortionImg_of_chessboard", cameraMatrix, distCoeff)

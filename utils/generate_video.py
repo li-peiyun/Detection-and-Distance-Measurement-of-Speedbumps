@@ -3,17 +3,17 @@ import numpy as np
 import glob
 import os
 
+
 def generate_video_from_frames(output_video_path, fps):
-    # 获取文件夹中所有图片的文件名
+    # Get the filenames of all images in the folder
     width = 0
     height = 0
     frames = []
-    #frame_paths = glob.glob("./marked_images/*.jpg")
-    #frame_paths.sort()  # 确保图片按照顺序排列
+    # Get paths of frames, ensuring they are sorted in order
     frame_paths = sorted(glob.glob("./marked_images/*.jpg"), key=lambda x: int(os.path.basename(x).split('.')[0]))
     for frame_path in frame_paths:
         frames.append(cv2.imread(frame_path))
-    # 读取第一张图片以获取图像大小
+    #  Read the first image to obtain image dimensions
     if frames is not None:
         height = frames[0].shape[0]
         width = frames[0].shape[1]
@@ -21,16 +21,16 @@ def generate_video_from_frames(output_video_path, fps):
     else:
         print("Failed to load the image.")
 
-    # 创建视频写入对象
+    # create video
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_video_path, fourcc, fps, (width, height))
 
-    # 逐帧写入视频
+    # Write video frame by frame
     for frame_path in frame_paths:
         frame = cv2.imread(frame_path)
         out.write(frame)
 
-    # 释放视频写入对象
+    # release video
     out.release()
 
-    print("视频生成完成")
+    print("Video generation complete")
