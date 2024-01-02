@@ -1,6 +1,5 @@
 import os
 
-# 清空文件夹
 def cleanFolder(folder):
     # delete the former photos
     del_list = os.listdir(folder)
