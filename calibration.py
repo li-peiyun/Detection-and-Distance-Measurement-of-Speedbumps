@@ -15,7 +15,7 @@ class Board:
         pass
 
 
-# 相机标定
+# camera calibration
 def CameraCalibration():
     board = Board(9, 6, 21)  # My calibration board parameters
     input_path = "Img_for_calibration"
